@@ -164,12 +164,7 @@ export const communitties = [
         photo: require('../assets/placePhoto/Yellowknife2.jpeg'),
         latitude: 62.453972,
         longitude:  -114.371788
-  
     },
-    {
-      
-       
-  
-    }
+   
 
 ];
