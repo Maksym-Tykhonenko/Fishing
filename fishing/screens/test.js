@@ -8,13 +8,11 @@ import {
   Modal,
   Image,
     ScrollView,
-    TextInput,
-  Card
+  TextInput,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { uid } from 'uid';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
 import { communitties } from '../data/commubities';
@@ -35,7 +33,7 @@ const FishingPlaceScreen = ({ navigation }) => {
     const [website, setWebsite] = useState('');
     const [email, setEmail] = useState('');
     const [adress, setAdress] = useState('');
-    const [selectPhoto, setSelectPhoto] = useState(null);
+    //const [name, setName] = useState('');
 
     const [newLocations, setNewLocations] = useState([]);
     console.log("new Locations2 ==>", newLocations);
@@ -52,10 +50,9 @@ const FishingPlaceScreen = ({ navigation }) => {
             phone: phoneNumber,
             website: website,
             email: email,
-            photo: selectPhoto,
             id: uid(),
-        }// ? selectPhoto.uri : null
-        //console.log("new Locations1 ==>", newLocations);
+        }
+        console.log("new Locations1 ==>", newLocations);
         setNewLocations([...newLocations, newLocation]);
 
         closeModal()
@@ -73,7 +70,6 @@ const FishingPlaceScreen = ({ navigation }) => {
         setPhoneNumber('')
         setWebsite('')
         setEmail('')
-        setSelectPhoto(null)
 
         setModalAddPlaceIsVisible(false)
     };
@@ -84,17 +80,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                 path: 'image',
             }
         };
-        
-        launchImageLibrary(options, response => {
-            if (!response.didCancel) {
-                //console.log('response==>', response.assets[0].uri);
-                setSelectPhoto(response.assets[0].uri);
-
-            } else {
-                console.log('Вибір скасовано');
-            }
-        });
-    };
+    }
 
     return (
         <View style={{ flex: 1, }}>
@@ -107,21 +93,6 @@ const FishingPlaceScreen = ({ navigation }) => {
                     <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 35, }}>
                         <ScrollView>
                             
-                            {newLocations && newLocations.map((i) => {
-                                return (
-                                    <TouchableOpacity
-                                        onPress={() => { navigation.navigate('NewPlace', { place: i }) }}
-                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}
-                                        key={i.id}>
-                                        <Image
-                                            source={{uri: i.photo}}
-                                            style={{ width: '100%', height: 200 }}
-                                        />
-                                        <Text style={{ fontWeight: '600', fontSize: 17 }}>{i.place}</Text>
-                                    </TouchableOpacity>
-                                )
-
-                            })}
                             
                             {communitties.map((i) => {
                                 return (
@@ -274,26 +245,18 @@ const FishingPlaceScreen = ({ navigation }) => {
 
                                     </View>
 
-                                    
-                                    {/**BTN add photo or Img*/}
-                                    {selectPhoto ? (
-                                        <Image
-                                            source={{uri: selectPhoto}}
-                                            style={{ width: '100%', height: 150, marginBottom: 10, borderRadius: 10 }} />
-                                    ): (
+                                    {/**BTN add photo */}
                                     <View style={{ alignItems: 'center' }}>
                                         <TouchableOpacity
                                             onPress={() => {
-                                                ImagePicer()
+                                                
                                             }}
                                             style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
                                         >
                                             <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>ADD PHOTO</Text>
                                         </TouchableOpacity>
-                                    </View>   
-                                    )}
+                                    </View>
                                     
-
                                     {/**BTN add new location */}
                                     <View style={{ alignItems: 'center' }}>
                                         <TouchableOpacity

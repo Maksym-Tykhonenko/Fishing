@@ -12,7 +12,8 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { uid } from "uid";
 
 
-const Place = ({ navigation, route }) => {
+
+const NewPlace = ({ navigation, route }) => {
     const [sideBarIsVisible, setSideBarIsVisible] = useState(false);
     const { height, width } = useWindowDimensions();
     const [fishingPlaceRaitinf, setfishingPlaceRaitinf] = useState(0);
@@ -31,7 +32,7 @@ const Place = ({ navigation, route }) => {
         latitude,
         longitude } = route.params.place;
     const [showContacts, setShowContacts] = useState(true);
-    //console.log('showContacts=>', showContacts);
+    console.log('showContacts=>', showContacts)
     const [modalWithPhoto, setModalWithPhoto] = useState(false);
     const [selectPhoto, setSelectPhoto] = useState([]);
     
@@ -57,42 +58,35 @@ const Place = ({ navigation, route }) => {
             }
         });
     };
-    
+
     return (
         <View style={{ flex: 1, }}>
             <ImageBackground
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
                 source={require('../assets/bgr.jpg')}
             >
+
                 <View style={{ flex: 1, position: 'relative' }}>
+                    <ScrollView>
+                        
+                        <View style={{ flex: 1, marginTop: 30, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderTopStartRadius: 10, borderTopEndRadius: 10, }}>
+                            <View style={{ flex: 1, alignItems: 'center' }}>
 
-                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 35, }}>
+                                <View style={{ alignItems: 'center', paddingHorizontal: 3, justifyContent: 'center' }}>
+                                    <Text style={{ fontSize: 22, fontWeight: '700' }}>{place}</Text>
+                                </View>
 
-                        <ScrollView>
+                                <View style={{ paddingHorizontal: 3, }}>
+                                    <Text style={{ fontSize: 16 }}>{aboutPlace}</Text>
+                                </View>
 
-                            <View style={{ flex: 1, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
-                                
+                                <Image
+                                    source={{ uri: photo }}
+                                    style={{ width: width, height: 200 }}
+                                />
+
+                                {/**Raitinng block */}
                                 <View>
-
-                                
-
-                                
-
-                                    <View style={{ alignItems: 'center', paddingHorizontal: 3, justifyContent: 'center' }}>
-                                        <Text style={{ fontSize: 22, fontWeight: '700' }}>{place}</Text>
-                                    </View>
-
-                                    
-
-                                    <View style={{ paddingHorizontal: 3, }}>
-                                        <Text style={{ fontSize: 16 }}>{aboutPlace}</Text>
-                                    </View>
-                               
-                                
-                                    <Image
-                                        source={photo}
-                                        style={{ width: width, height: 200 }}
-                                    />
                                     {fishingPlaceRaitinf < 1 && <View style={{ alignItems: 'center', marginBottom: -30 }}><Text style={{ fontSize: 20, color: 'gold', fontWeight: '600' }}>Leave a rating for this community</Text></View>}
 
                                     {/**RAITING */}
@@ -101,51 +95,59 @@ const Place = ({ navigation, route }) => {
                                         onFinishRating={ratingCompleted}
                                         defaultRating={fishingPlaceRaitinf}
                                     />
-                                    <Text style={{ fontSize: 20, fontWeight: '700', color: '#004d00' }}>{communittie} communitie</Text>
-
-                                    <View style={{ paddingHorizontal: 3, }}>
-                                    
-
-                                        <Text style={{ fontSize: 16 }}>{discription}</Text>
-
-                                        <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}>We provide the following services: </Text>{services}</Text>
-                                
-                                    </View>
-                                
-                               
                                 </View>
-                                
-                                <MapView
-                                    style={{ height: 200, marginBottom: 5, borderRadius: 10 }}
-                                    initialRegion={{
-                                        latitude: latitude,
-                                        longitude: longitude,
-                                        latitudeDelta: 0.0922,
-                                        longitudeDelta: 0.0421,
-                                    }}
-                                />
 
-                                {/**CONTACT BLOCK */}
-                                <View>
-                                    <View style={{ alignItems: 'center' }}>
-                                        <TouchableOpacity
-                                            style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                            onPress={() => { setShowContacts(!showContacts) }}
-                                        >
-                                        
+                               
+                            
                                 
-                                            {showContacts ? (
-                                                <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Show contacts</Text>
-                                            ) : (
-                                                <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Hide contacts</Text>
-                                            )}
-                                        </TouchableOpacity>
-                                    </View>
-                                    
-                                    
-                                    {!showContacts && <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            
+                                <Text style={{ fontSize: 20, fontWeight: '700', color: '#004d00' }}>{communittie} communitie</Text>
 
-                                        <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Our contacts: </Text>
+                                <View style={{ paddingHorizontal: 3, }}>
+                                    
+
+                                    <Text style={{ fontSize: 16 }}>{discription}</Text>
+
+                                    <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}>We provide the following services: </Text>{services}</Text>
+                                
+                                </View>
+
+                               
+                                
+                            </View>
+
+                            <MapView
+                                style={{ height: 200, marginBottom: 5, borderRadius: 10 }}
+                                initialRegion={{
+                                    latitude: 65.187912,
+                                    longitude: -123.421722,
+                                    latitudeDelta: 0.99999,
+                                    longitudeDelta: 0.9421,
+                                }}
+                            />
+
+                            {/**contact block */}
+                            <View style={{ alignItems: 'center' }}>
+                                <TouchableOpacity
+                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                    onPress={() => { setShowContacts(!showContacts) }}
+                                >
+                                    {showContacts ? (
+                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Show contacts</Text>
+                                    ) : (
+                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Hide contacts</Text>
+                                    )}
+                                </TouchableOpacity>
+                                    
+                                {!showContacts &&
+                                    <View>
+                                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+
+                                   
+
+                                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Our contacts: </Text>
+                                        </View>
+                            
 
                                         <View style={{ paddingHorizontal: 3, }}>
                                             <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Fontisto name='person' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{contactName}</Text>
@@ -167,43 +169,32 @@ const Place = ({ navigation, route }) => {
                                             </TouchableOpacity>
                                 
                                         </View>
-                                   
-
-                                    
-                                    </View>}
-
-                                </View>
-                                
-                                {/**Fishing catch photo */}
-                                <View style={{ alignItems: 'center' }}>
-                                    <TouchableOpacity
-                                        style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        onPress={() => { setModalWithPhoto(true) }}
-                                    >
-                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Fishing catch photo</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                
-                                
+                                    </View>
+                                }
 
                             </View>
-                            
-                            
-                            
 
-                        </ScrollView>
-                            
-                       
+                            {/**Fishing catch photo */}
+                            <View style={{ alignItems: 'center' }}>
+                                <TouchableOpacity
+                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                    onPress={() => { setModalWithPhoto(true) }}
+                                >
+                                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Fishing catch photo</Text>
+                                </TouchableOpacity>
+                            </View>
 
+                        </View>
 
-                    </SafeAreaView>
+                    </ScrollView>
 
                     <TouchableOpacity
-                        onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
-                    </TouchableOpacity>
+              onPress={() => setSideBarIsVisible(true)}
+              style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+              <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
+            </TouchableOpacity>
 
+                    {/**btn back */}
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
@@ -212,6 +203,10 @@ const Place = ({ navigation, route }) => {
                     >
                         <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
                     </TouchableOpacity>
+
+                    
+                    
+
                 </View>
 
                 {/**SIDEBAR */}
@@ -315,11 +310,11 @@ const Place = ({ navigation, route }) => {
 
                     </View>
                 </Modal>
-                
+
             </ImageBackground>
-           
+
         </View>
     );
 };
 
-export default Place;
+export default NewPlace;
