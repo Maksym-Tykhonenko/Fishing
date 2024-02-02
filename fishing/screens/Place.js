@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState,useEffect } from "react";
 import { View,Modal, Text,ImageBackground,SafeAreaView,ScrollView, Image, TouchableOpacity } from "react-native";
 import { useWindowDimensions } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -10,6 +10,7 @@ import MapView from 'react-native-maps';
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { uid } from "uid";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const Place = ({ navigation, route }) => {
@@ -34,6 +35,43 @@ const Place = ({ navigation, route }) => {
     //console.log('showContacts=>', showContacts);
     const [modalWithPhoto, setModalWithPhoto] = useState(false);
     const [selectPhoto, setSelectPhoto] = useState([]);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    useEffect(() => {
+        setData();
+    }, [fishingPlaceRaitinf, selectPhoto])
+
+    const setData = async () => {
+        try {
+            const data = {
+                fishingPlaceRaitinf,
+                selectPhoto,
+            }
+            const jsonData = JSON.stringify(data);
+            await AsyncStorage.setItem(`Place${communittie}`, jsonData);
+            console.log('Дані збережено в AsyncStorage')
+        } catch (e) {
+            console.log('Помилка збереження даних:', e);
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const jsonData = await AsyncStorage.getItem(`Place${communittie}`);
+            if (jsonData !== null) {
+                const parsedData = JSON.parse(jsonData);
+                console.log('parsedData==>', parsedData);
+                setSelectPhoto(parsedData.selectPhoto);
+                setfishingPlaceRaitinf(parsedData.fishingPlaceRaitinf);
+        
+            }
+        } catch (e) {
+            console.log('Помилка отримання даних:', e);
+        }
+    };
     
     const ratingCompleted = (rating) => {
         //console.log("Rating is: " + rating);

@@ -26,7 +26,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 6000,
+        duration: 4000,
         useNativeDriver: true,
       }).start();
     }, []);
@@ -47,15 +47,15 @@ const HomeScreen = ({ navigation }) => {
 
     return (
       <View style={{ position: 'relative', flex: 1 }}>
-        <Animated.View
-          //source={require('../assets/bgrStart.jpeg')}// Special animatable View
+        <Animated.Image
+          source={require('../assets/bgr101.jpeg')}// Special animatable View
           style={{
-            color: '#fde114',
+            //color: '#fde114',
             ...props.style,
             opacity: fadeAnim,
             //width: 'auto',
             height: '100%'  // Bind opacity to animated value
-          }} ></Animated.View>
+          }} />
         <Animated.Image
           source={require('../assets/bgr.jpg')}// Special animatable View
           style={{

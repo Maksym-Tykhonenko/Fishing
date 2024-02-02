@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {
   SafeAreaView,
   ImageBackground,
@@ -16,6 +16,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import { uid } from 'uid';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const ProfileScreen = ({ navigation }) => {
@@ -31,6 +32,46 @@ const ProfileScreen = ({ navigation }) => {
     const [place, setPlace] = useState('');
     const [fidback, setFidback] = useState('');
     const [selected, setSelected] = useState('');
+
+     {/** */ }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    useEffect(() => {
+        setData();
+    }, [name, selectPhoto, fishingPlace])
+
+    const setData = async () => {
+        try {
+            const data = {
+                selectPhoto,
+                name,
+                fishingPlace,
+            }
+            const jsonData = JSON.stringify(data);
+            await AsyncStorage.setItem(`ProfileScreen`, jsonData);
+            console.log('Дані збережено в AsyncStorage')
+        } catch (e) {
+            console.log('Помилка збереження даних:', e);
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const jsonData = await AsyncStorage.getItem(`ProfileScreen`);
+            if (jsonData !== null) {
+                const parsedData = JSON.parse(jsonData);
+                console.log('parsedData==>', parsedData);
+                setSelectPhoto(parsedData.selectPhoto);
+                setName(parsedData.name);
+                setFishingPlace(parsedData.fishingPlace);
+        
+            }
+        } catch (e) {
+            console.log('Помилка отримання даних:', e);
+        }
+    };
     
     const ImagePicer = () => {
         let options = {
@@ -80,83 +121,88 @@ const ProfileScreen = ({ navigation }) => {
                 style={{ flex: 1 }}
                 source={require('../assets/bgr.jpg')}
             >
-                <View style={{ flex: 1, position: 'relative' }}>
+                <SafeAreaView style={{ flex: 1, position: 'relative' }}>
 
                     
 
-                        <SafeAreaView style={{ marginHorizontal: 10, marginTop: 30 }}>
+                    <View style={{ marginHorizontal: 10, marginTop: 30 }}>
                             
-                            {/**AVATAR */}
-                            <View style={{ alignItems: 'center' }}>
-                                {!selectPhoto ? (
-                                    <TouchableOpacity
-                                        onPress={() => { ImagePicer() }}
-                                        style={{ width: 250, height: 250, backgroundColor: 'rgba(128, 128, 128, 0.5)', alignItems: 'center', justifyContent: 'center', borderRadius: 150 }}
-                                    >
-                                        <Text style={{ color: '#fff', fontSize: 38, fontWeight: '600' }}>TAB FOR</Text>
-                                        <Text style={{ color: '#fff', fontSize: 38, fontWeight: '600' }}>ADD  PHOTO</Text>
-                                    </TouchableOpacity>
-                                ) : (
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            ImagePicer()
-                                        }}
-                                    ><Image
-                                            source={{ uri: selectPhoto }}
-                                            style={{ width: 250, height: 250, backgroundColor: 'rgba(128, 128, 128, 0.5)', alignItems: 'center', justifyContent: 'center', borderRadius: 150 }} />
-                                    </TouchableOpacity>
-                                )}
-                                
-                            </View>
-
-                            {/**NAME AND BUTTONS*/}
-                            <View style={{ alignItems: 'center', }}>
-
-                                {!name ? (
-                                    <TouchableOpacity
-                                        onPress={() => { setNameModal(true) }}
-                                    >
-                                        <Text style={{ fontSize: 30, fontWeight: '600' }}>My name is...</Text>
-                                    </TouchableOpacity>
-                                ) : (
-                                    <TouchableOpacity
-                                        onPress={() => { setNameModal(true) }}
-                                    >
-                                        <Text style={{ fontSize: 30, fontWeight: '600' }}>{name}</Text>
-                                    </TouchableOpacity>
-                                )}
-                                
-                            </View>
-
-                            <View style={{ alignItems: 'center',  }}>
-                                
+                        {/**AVATAR */}
+                        <View style={{ alignItems: 'center' }}>
+                            {!selectPhoto ? (
+                                <TouchableOpacity
+                                    onPress={() => { ImagePicer() }}
+                                    style={{ width: 250, height: 250, backgroundColor: 'rgba(128, 128, 128, 0.5)', alignItems: 'center', justifyContent: 'center', borderRadius: 150 }}
+                                >
+                                    <Text style={{ color: '#fff', fontSize: 38, fontWeight: '600' }}>TAB FOR</Text>
+                                    <Text style={{ color: '#fff', fontSize: 38, fontWeight: '600' }}>ADD  PHOTO</Text>
+                                </TouchableOpacity>
+                            ) : (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setFishingPlaceModal(true)
+                                        ImagePicer()
                                     }}
-                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                >
-                                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Add fishing place</Text>
+                                ><Image
+                                        source={{ uri: selectPhoto }}
+                                        style={{ width: 250, height: 250, backgroundColor: 'rgba(128, 128, 128, 0.5)', alignItems: 'center', justifyContent: 'center', borderRadius: 150 }} />
                                 </TouchableOpacity>
+                            )}
+                                
+                        </View>
+
+                        {/**NAME AND BUTTONS*/}
+                        <View style={{ alignItems: 'center', }}>
+
+                            {!name ? (
+                                <TouchableOpacity
+                                    onPress={() => { setNameModal(true) }}
+                                >
+                                    <Text style={{ fontSize: 30, fontWeight: '600' }}>My name is...</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    onPress={() => { setNameModal(true) }}
+                                >
+                                    <Text style={{ fontSize: 30, fontWeight: '600' }}>{name}</Text>
+                                </TouchableOpacity>
+                            )}
+                                
+                        </View>
+
+                        <View style={{ alignItems: 'center', }}>
+                                
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setFishingPlaceModal(true)
+                                }}
+                                style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                            >
+                                <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Add fishing place</Text>
+                            </TouchableOpacity>
                         </View>
                         
-                            <ScrollView>
+                        <ScrollView>
                             {fishingPlace.map((i) => {
                                 return (
                                     <View
-                                        style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9,  marginBottom: 10, paddingLeft: 10,  borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: '100%', }}
+                                        style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginBottom: 10, paddingLeft: 10, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: '100%', }}
                                         key={uid()}
                                     >
-                                        <Text style={{color:'#fff'}}>{i.selected }</Text> 
-                                        <Text style={{color:'green', fontWeight: 'bold'}}>{i.place }</Text> 
-                                        <Text style={{color:'#fff'}}>{i.fidback }</Text> 
+                                        <Text style={{ color: '#fff' }}>{i.selected}</Text>
+                                        <Text style={{ color: 'green', fontWeight: 'bold' }}>{i.place}</Text>
+                                        <Text style={{ color: '#fff' }}>{i.fidback}</Text>
                                     </View>
                                     
                                 )
                             })}
- </ScrollView>
+                        </ScrollView>
+
+
+
+
+                        
                             
-                        </SafeAreaView>
+                    </View>
 
 
                    
@@ -166,7 +212,7 @@ const ProfileScreen = ({ navigation }) => {
 
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        style={{ position: 'absolute', top: 30, left: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
                         <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
                     </TouchableOpacity>
 
@@ -174,7 +220,7 @@ const ProfileScreen = ({ navigation }) => {
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 5, right: 5, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 10,  width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
                         <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
                     </TouchableOpacity>
@@ -292,7 +338,7 @@ const ProfileScreen = ({ navigation }) => {
                             <TextInput
                                 placeholderTextColor='rgba(0, 0, 0, 0.5)'
                                 placeholder="My feedback..."
-                                multiline = {true}
+                                multiline={true}
                                 value={fidback}
                                 onChangeText={setFidback}
                                 style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 80, }}
@@ -320,7 +366,7 @@ const ProfileScreen = ({ navigation }) => {
                     </Modal>
                    
 
-                </View>
+                </SafeAreaView>
         
             </ImageBackground>
       

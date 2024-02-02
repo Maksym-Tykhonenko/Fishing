@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {
   SafeAreaView,
   ImageBackground,
@@ -14,7 +14,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { uid } from 'uid';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 import { communitties } from '../data/commubities';
@@ -39,6 +40,41 @@ const FishingPlaceScreen = ({ navigation }) => {
 
     const [newLocations, setNewLocations] = useState([]);
     console.log("new Locations2 ==>", newLocations);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    useEffect(() => {
+        setData();
+    }, [newLocations])
+
+    const setData = async () => {
+        try {
+            const data = {
+                newLocations
+            }
+            const jsonData = JSON.stringify(data);
+            await AsyncStorage.setItem(`FishingPlaceScreen`, jsonData);
+            console.log('Дані збережено в AsyncStorage')
+        } catch (e) {
+            console.log('Помилка збереження даних:', e);
+        }
+    };
+
+    const getData = async () => {
+        try {
+            const jsonData = await AsyncStorage.getItem(`FishingPlaceScreen`);
+            if (jsonData !== null) {
+                const parsedData = JSON.parse(jsonData);
+                console.log('parsedData==>', parsedData);
+                setNewLocations(parsedData.newLocations);
+        
+            }
+        } catch (e) {
+            console.log('Помилка отримання даних:', e);
+        }
+    };
 
     const addNewLocation = () => {
         let newLocation = {
@@ -145,13 +181,13 @@ const FishingPlaceScreen = ({ navigation }) => {
 
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        style={{ position: 'absolute', top: 30, left: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
                         <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => { setModalAddPlaceIsVisible(true) }}
-                        style={{ position: 'absolute', top: 20, right: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        style={{ position: 'absolute', top: 30, right: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
                         <Entypo name='plus' style={{ color: '#fff', fontSize: 35 }} />
                     </TouchableOpacity>
 
@@ -159,7 +195,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 5, right: 5, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
                         <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
                     </TouchableOpacity>
