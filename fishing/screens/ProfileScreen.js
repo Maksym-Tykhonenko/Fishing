@@ -1,15 +1,18 @@
 import React,{useState, useEffect} from 'react';
 import {
-  SafeAreaView,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-  Image,
+    SafeAreaView,
+    ImageBackground,
+    Text,
+    TouchableOpacity,
+    View,
+    Modal,
+    Image,
     ScrollView,
     TextInput,
-  SafeAreaViews
+    SafeAreaViews,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -26,14 +29,15 @@ const ProfileScreen = ({ navigation }) => {
     const [nameModal, setNameModal] = useState(false);
     const [fishingPlaceModal, setFishingPlaceModal] = useState(false)
     const [nameInModal, setNameInModal] = useState('');
-    const [name, setName] = useState();
+    const [name, setName] = useState('');
+    //console.log('nameLang==>', name.length)
     const [fishingPlace, setFishingPlace] = useState([]);
-    console.log('fishingPlace==>', fishingPlace)
+    //console.log('fishingPlace==>', fishingPlace)
     const [place, setPlace] = useState('');
     const [fidback, setFidback] = useState('');
     const [selected, setSelected] = useState('');
 
-     {/** */ }
+    {/** */ }
     useEffect(() => {
         getData();
     }, []);
@@ -124,6 +128,7 @@ const ProfileScreen = ({ navigation }) => {
                 <SafeAreaView style={{ flex: 1, position: 'relative' }}>
 
                     
+                    
 
                     <View style={{ marginHorizontal: 10, marginTop: 30 }}>
                             
@@ -151,23 +156,25 @@ const ProfileScreen = ({ navigation }) => {
                         </View>
 
                         {/**NAME AND BUTTONS*/}
-                        <View style={{ alignItems: 'center', }}>
 
-                            {!name ? (
+                        
+                        <View style={{ alignItems: 'center' }}>
+
+                            {name.length > 0 ? (
                                 <TouchableOpacity
-                                    onPress={() => { setNameModal(true) }}
-                                >
-                                    <Text style={{ fontSize: 30, fontWeight: '600' }}>My name is...</Text>
-                                </TouchableOpacity>
+                                onPress={() => { setNameModal(true) }}
+                                ><Text style={{ fontSize: 30, fontWeight: '600' }}>{ name}</Text>
+                            </TouchableOpacity> 
                             ) : (
-                                <TouchableOpacity
-                                    onPress={() => { setNameModal(true) }}
-                                >
-                                    <Text style={{ fontSize: 30, fontWeight: '600' }}>{name}</Text>
-                                </TouchableOpacity>
+                                 <TouchableOpacity
+                                onPress={() => { setNameModal(true) }}
+                                ><Text style={{ fontSize: 30, fontWeight: '600' }}>My name is...</Text>
+                            </TouchableOpacity>   
                             )}
-                                
+                            
+                       
                         </View>
+                         
 
                         <View style={{ alignItems: 'center', }}>
                                 
@@ -180,8 +187,12 @@ const ProfileScreen = ({ navigation }) => {
                                 <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Add fishing place</Text>
                             </TouchableOpacity>
                         </View>
-                        
+
+
+                       
                         <ScrollView>
+                            
+                            
                             {fishingPlace.map((i) => {
                                 return (
                                     <View
@@ -195,34 +206,27 @@ const ProfileScreen = ({ navigation }) => {
                                     
                                 )
                             })}
+                          
                         </ScrollView>
 
-
-
-
-                        
                             
                     </View>
-
-
-                   
-
-          
                   
-
+                    {/**BTN  SIDEBAR*/}
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 30, left: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
+                        style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
+                    {/**BTN  goBack*/}
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 15, right: 10,  width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
-                        <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
+                        <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
 
                     {/**SIDEBAR */}
@@ -233,15 +237,18 @@ const ProfileScreen = ({ navigation }) => {
                     >
                         <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
 
-                            {/**BTN SideBar Close */}
-                            <TouchableOpacity
-                                onPress={() => { setSideBarIsVisible(false) }}
-                                style={{ position: 'absolute', top: 20, left: 10 }}>
-                                <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
-                            </TouchableOpacity>
+                            
 
                             {/**BTN route block */}
                             <View style={{ marginTop: 70, marginLeft: 20 }}>
+
+                                {/**BTN SideBar Close */}
+                                <TouchableOpacity
+                                    onPress={() => { setSideBarIsVisible(false) }}
+                                    style={{ marginBottom: 10 }}>
+                                    <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
+                                </TouchableOpacity>
+
                                 <TouchableOpacity
                                     onPress={() => {
                                         navigation.navigate('HomeScreen'),
@@ -292,22 +299,21 @@ const ProfileScreen = ({ navigation }) => {
                                 <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
                             </TouchableOpacity>
 
-                            <TextInput
-                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                placeholder="Communittie..."
-                                value={nameInModal}
-                                onChangeText={setNameInModal}
-                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                            />
+                                    <TextInput
+                                        placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                        placeholder="Communittie..."
+                                        value={nameInModal}
+                                        onChangeText={setNameInModal}
+                                        style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                    />
 
-                            <TouchableOpacity
-                                onPress={() => {
-                                    handleAddName()
-                                }}
-                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}>
-                                <Text style={{ color: '#fff', fontSize: 30 }}>SAVE</Text>
-                            </TouchableOpacity>
-                        
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            handleAddName()
+                                        }}
+                                        style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}>
+                                        <Text style={{ color: '#fff', fontSize: 30 }}>SAVE</Text>
+                                    </TouchableOpacity>
                         </View>
 
                     </Modal>
@@ -320,6 +326,7 @@ const ProfileScreen = ({ navigation }) => {
                     >
                         <View style={{ alignItems: 'center', paddingTop: 40, backgroundColor: '#292c33', flex: 1, marginRight: '5%', marginLeft: '5%', marginTop: '10%', marginBottom: '10%', borderRadius: 10 }}>
                             
+
                             {/**BTN SideBar Close */}
                             <TouchableOpacity
                                 onPress={() => { CloseFishinngPleseModal() }}
@@ -327,40 +334,68 @@ const ProfileScreen = ({ navigation }) => {
                                 <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
                             </TouchableOpacity>
 
-                            <TextInput
-                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                placeholder="Fishing place..."
-                                value={place}
-                                onChangeText={setPlace}
-                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                            />
+                            <KeyboardAvoidingView
+                                style={{ flex: 1, }}
+                                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            >
+                                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-                            <TextInput
-                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                placeholder="My feedback..."
-                                multiline={true}
-                                value={fidback}
-                                onChangeText={setFidback}
-                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 80, }}
-                            />
+                                
+                            
 
-                            <Calendar
-                                onDayPress={day => {
-                                    setSelected(day.dateString);
-                                }}
-                                markedDates={{
-                                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
-                                }}
-                            />
+                                    <ScrollView style={{ marginBottom: 50 }}>
+                                
+                                
+                                        <View>
+                                        
+                                            <Calendar
+                                                onDayPress={day => {
+                                                    setSelected(day.dateString);
+                                                }}
+                                                markedDates={{
+                                                    [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                                                }}
+                                            />
+                                
 
-                            <TouchableOpacity
-                                onPress={() => {
-                                    handleAddDataAboutFishingPlace()
-                                }}
-                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 20, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}>
-                                <Text style={{ color: '#fff', fontSize: 30 }}>SAVE</Text>
-                            </TouchableOpacity>
-                        
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Fishing place..."
+                                                value={place}
+                                                onChangeText={setPlace}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 20, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
+
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="My feedback..."
+                                                multiline={true}
+                                                value={fidback}
+                                                onChangeText={setFidback}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 80, }}
+                                            />
+
+                                        
+                                       
+                                            
+                                            <View style={{ alignItems: 'center' }}>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        handleAddDataAboutFishingPlace()
+                                                    }}
+                                                    style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 20, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}>
+                                                    <Text style={{ color: '#fff', fontSize: 30 }}>SAVE</Text>
+                                                </TouchableOpacity>
+
+                                            </View>
+
+                                        </View>
+
+                                
+
+                                    </ScrollView>
+                                </TouchableWithoutFeedback>
+                            </KeyboardAvoidingView>
                         </View>
 
                     </Modal>

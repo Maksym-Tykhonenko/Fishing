@@ -1,15 +1,18 @@
 import React,{useState,useEffect} from 'react';
 import {
-  SafeAreaView,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-  Image,
+    SafeAreaView,
+    ImageBackground,
+    Text,
+    TouchableOpacity,
+    View,
+    Modal,
+    Image,
     ScrollView,
     TextInput,
-  Card
+    Card,
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -39,7 +42,7 @@ const FishingPlaceScreen = ({ navigation }) => {
     const [selectPhoto, setSelectPhoto] = useState(null);
 
     const [newLocations, setNewLocations] = useState([]);
-    console.log("new Locations2 ==>", newLocations);
+    //console.log("new Locations2 ==>", newLocations);
 
     useEffect(() => {
         getData();
@@ -140,7 +143,7 @@ const FishingPlaceScreen = ({ navigation }) => {
             >
                 <View style={{ flex: 1, position: 'relative' }}>
 
-                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 35, }}>
+                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 55, }}>
                         <ScrollView>
                             
                             {newLocations && newLocations.map((i) => {
@@ -150,7 +153,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                                         style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}
                                         key={i.id}>
                                         <Image
-                                            source={{uri: i.photo}}
+                                            source={{ uri: i.photo }}
                                             style={{ width: '100%', height: 200 }}
                                         />
                                         <Text style={{ fontWeight: '600', fontSize: 17 }}>{i.place}</Text>
@@ -181,23 +184,23 @@ const FishingPlaceScreen = ({ navigation }) => {
 
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 30, left: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
+                        style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => { setModalAddPlaceIsVisible(true) }}
-                        style={{ position: 'absolute', top: 30, right: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <Entypo name='plus' style={{ color: '#fff', fontSize: 35 }} />
+                        style={{ position: 'absolute', top: 40, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        <Entypo name='plus' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 15, right: 5, width: 40, height: 40, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
-                        <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
+                        <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
 
                     
@@ -210,144 +213,156 @@ const FishingPlaceScreen = ({ navigation }) => {
 
                         <View style={{ backgroundColor: '#292c33', flex: 1, marginTop: '20%', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
 
-                            {/**BTN SideBar Close */}
+                            {/**BTN Modal Close */}
                             <TouchableOpacity
                                 onPress={() => { closeModal() }}
-                                style={{ position: 'absolute', top: 0, left: 10, width: 40, height: 40 }}>
+                                style={{ position: 'absolute', top: 10, left: 10, width: 45, height: 45 }}>
                                 <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
                             </TouchableOpacity>
 
-                            <View style={{ alignItems: 'center', marginTop: 20 }}>
-                                <Text style={{ color: '#fff', fontSize: 27, fontWeight: '500', marginTop: 20 }}>Add new location</Text>
+                            <View style={{ alignItems: 'center', marginTop: 40 }}>
+
+                                
 
                                 <ScrollView style={{ marginBottom: 50 }}>
-                               
-                                    {/**INPUT BLOCK */}
+
+                                    <Text style={{ color: '#fff', fontSize: 27, fontWeight: '500', marginTop: 20 }}>Add new location</Text>
+                                    
+                                    
+                                        
                                     <View>
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Location..."
-                                            value={location}
-                                            onChangeText={setLocation}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="About this location..."
-                                            multiline={true}
-                                            numberOfLines={4}
-                                            value={aboutLocat}
-                                            onChangeText={setAboutLocat}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 100, }}
-                                        />
+                                        {/**INPUT BLOCK */}
+                                        <View>
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Location..."
+                                                value={location}
+                                                onChangeText={setLocation}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Communittie..."
-                                            value={communittie}
-                                            onChangeText={setCommunittie}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="About this location..."
+                                                multiline={true}
+                                                numberOfLines={4}
+                                                value={aboutLocat}
+                                                onChangeText={setAboutLocat}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 100, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="About this communittie..."
-                                            multiline={true}
-                                            numberOfLines={4}
-                                            value={aboutCommunit}
-                                            onChangeText={setAboutCommunit}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 100, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Communittie..."
+                                                value={communittie}
+                                                onChangeText={setCommunittie}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="What services provided..."
-                                            value={servis}
-                                            onChangeText={setServis}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="About this communittie..."
+                                                multiline={true}
+                                                numberOfLines={4}
+                                                value={aboutCommunit}
+                                                onChangeText={setAboutCommunit}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 100, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Contact Persone..."
-                                            value={contactPerson}
-                                            onChangeText={setContactPerson}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="What services provided..."
+                                                value={servis}
+                                                onChangeText={setServis}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Adress..."
-                                            value={adress}
-                                            onChangeText={setAdress}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Contact Persone..."
+                                                value={contactPerson}
+                                                onChangeText={setContactPerson}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Phone number..."
-                                            value={phoneNumber}
-                                            onChangeText={setPhoneNumber}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Adress..."
+                                                value={adress}
+                                                onChangeText={setAdress}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Website..."
-                                            value={website}
-                                            onChangeText={setWebsite}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Phone number..."
+                                                value={phoneNumber}
+                                                onChangeText={setPhoneNumber}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                        <TextInput
-                                            placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                                            placeholder="Email..."
-                                            value={email}
-                                            onChangeText={setEmail}
-                                            style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        />
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Website..."
+                                                value={website}
+                                                onChangeText={setWebsite}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
 
-                                    </View>
+                                            <TextInput
+                                                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                                                placeholder="Email..."
+                                                value={email}
+                                                onChangeText={setEmail}
+                                                style={{ shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                            />
+
+                                        </View>
 
                                     
-                                    {/**BTN add photo or Img*/}
-                                    {selectPhoto ? (
-                                        <Image
-                                            source={{uri: selectPhoto}}
-                                            style={{ width: '100%', height: 150, marginBottom: 10, borderRadius: 10 }} />
-                                    ): (
-                                    <View style={{ alignItems: 'center' }}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                ImagePicer()
-                                            }}
-                                            style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                        >
-                                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>ADD PHOTO</Text>
-                                        </TouchableOpacity>
-                                    </View>   
-                                    )}
+                                        {/**BTN add photo or Img*/}
+                                        {selectPhoto ? (
+                                            <Image
+                                                source={{ uri: selectPhoto }}
+                                                style={{ width: '100%', height: 150, marginBottom: 10, borderRadius: 10 }} />
+                                        ) : (
+                                            <View style={{ alignItems: 'center' }}>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        ImagePicer()
+                                                    }}
+                                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                                >
+                                                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>ADD PHOTO</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        )}
                                     
 
-                                    {/**BTN add new location */}
-                                    <View style={{ alignItems: 'center' }}>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                if ( location === "" || aboutLocat === "" || communittie === "" || aboutCommunit === "" || servis === "" || contactPerson === "" || phoneNumber === "" || website === "" || email === "" || adress === "" ) {
-                                                    alert("Please fill in all fields.")
-                                                } else {
+                                        {/**BTN ADD */}
+                                        <View style={{ alignItems: 'center' }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
                                                     addNewLocation()
-                                                }
-                                                
-                                            }}
-                                            style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}
-                                        >
-                                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>ADD</Text>
-                                        </TouchableOpacity>
+                                                }}
+                                                style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 100, height: 40, }}
+                                            >
+                                                <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>ADD</Text>
+                                            </TouchableOpacity>
+                                        </View>
+
+                                        <View style={{height: 400}}>
+
+                                        </View>
+
                                     </View>
-                                    
+
+                                        
+
                                 </ScrollView>
+
+                                
                             </View>
 
 
@@ -362,16 +377,16 @@ const FishingPlaceScreen = ({ navigation }) => {
                     >
                         <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
 
-                            {/**BTN SideBar Close */}
-                            <TouchableOpacity
-                                onPress={() => { setSideBarIsVisible(false) }}
-                                style={{ position: 'absolute', top: 20, left: 10 }}>
-                                <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
-                            </TouchableOpacity>
-                            
-
                             {/**BTN route block */}
                             <View style={{ marginTop: 70, marginLeft: 20 }}>
+
+                                {/**BTN SideBar Close */}
+                                <TouchableOpacity
+                                    onPress={() => { setSideBarIsVisible(false) }}
+                                    style={{ marginBottom: 10 }}>
+                                    <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
+                                </TouchableOpacity>
+
                                 <TouchableOpacity
                                     onPress={() => {
                                         navigation.navigate('HomeScreen'),

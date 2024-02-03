@@ -18,7 +18,7 @@ const NewPlace = ({ navigation, route }) => {
     const [sideBarIsVisible, setSideBarIsVisible] = useState(false);
     const { height, width } = useWindowDimensions();
     const [fishingPlaceRaitinf, setfishingPlaceRaitinf] = useState(0);
-    console.log('fishingPlaceRaitinf=>>',fishingPlaceRaitinf)
+    //console.log('fishingPlaceRaitinf=>>', fishingPlaceRaitinf)
     const {
         place,
         photo,
@@ -34,7 +34,7 @@ const NewPlace = ({ navigation, route }) => {
         latitude,
         longitude } = route.params.place;
     const [showContacts, setShowContacts] = useState(false);
-    console.log('showContacts=>', showContacts)
+    //console.log('showContacts=>', showContacts)
     const [modalWithPhoto, setModalWithPhoto] = useState(false);
     const [selectPhoto, setSelectPhoto] = useState([]);
 
@@ -106,141 +106,145 @@ const NewPlace = ({ navigation, route }) => {
             >
 
                 <View style={{ flex: 1, position: 'relative' }}>
-                    <ScrollView>
+                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 55, }}>
+                        <ScrollView>
                         
-                        <View style={{ flex: 1, marginTop: 30, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderTopStartRadius: 10, borderTopEndRadius: 10, }}>
-                            <View style={{ flex: 1, alignItems: 'center' }}>
+                            <View style={{ flex: 1, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
+                                <View style={{ flex: 1, alignItems: 'center' }}>
 
-                                <View style={{ alignItems: 'center', paddingHorizontal: 3, justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 22, fontWeight: '700' }}>{place}</Text>
+                                    <View style={{ alignItems: 'center', paddingHorizontal: 3, justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: 22, fontWeight: '700' }}>{place}</Text>
+                                    </View>
+
+                                    <View style={{ paddingHorizontal: 3, }}>
+                                        <Text style={{ fontSize: 16 }}>{aboutPlace}</Text>
+                                    </View>
+
+                                    <Image
+                                        source={{ uri: photo }}
+                                        style={{ width: width, height: 200 }}
+                                    />
+
+                                    {/**Raitinng block */}
+                                    <View>
+                                        {fishingPlaceRaitinf < 1 && <View style={{ alignItems: 'center', marginBottom: -30 }}><Text style={{ fontSize: 20, color: 'gold', fontWeight: '600' }}>Leave a rating for this community</Text></View>}
+
+                                        {/**RAITING */}
+                                        <AirbnbRating
+                                            style={{ color: '#000' }}
+                                            onFinishRating={ratingCompleted}
+                                            defaultRating={fishingPlaceRaitinf}
+                                        />
+                                    </View>
+
+                               
+                            
+                                
+                            
+                                    <Text style={{ fontSize: 20, fontWeight: '700', color: '#004d00' }}>{communittie} communitie</Text>
+
+                                    <View style={{ paddingHorizontal: 3, }}>
+                                    
+
+                                        <Text style={{ fontSize: 16 }}>{discription}</Text>
+
+                                        <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}>We provide the following services: </Text>{services}</Text>
+                                
+                                    </View>
+
+                               
+                                
                                 </View>
 
-                                <View style={{ paddingHorizontal: 3, }}>
-                                    <Text style={{ fontSize: 16 }}>{aboutPlace}</Text>
-                                </View>
-
-                                <Image
-                                    source={{ uri: photo }}
-                                    style={{ width: width, height: 200 }}
+                                <MapView
+                                    style={{ height: 200, marginBottom: 5, borderRadius: 10 }}
+                                    initialRegion={{
+                                        latitude: 65.187912,
+                                        longitude: -123.421722,
+                                        latitudeDelta: 0.99999,
+                                        longitudeDelta: 0.9421,
+                                    }}
                                 />
 
-                                {/**Raitinng block */}
-                                <View>
-                                    {fishingPlaceRaitinf < 1 && <View style={{ alignItems: 'center', marginBottom: -30 }}><Text style={{ fontSize: 20, color: 'gold', fontWeight: '600' }}>Leave a rating for this community</Text></View>}
-
-                                    {/**RAITING */}
-                                    <AirbnbRating
-                                        style={{ color: '#000' }}
-                                        onFinishRating={ratingCompleted}
-                                        defaultRating={fishingPlaceRaitinf}
-                                    />
-                                </View>
-
-                               
-                            
-                                
-                            
-                                <Text style={{ fontSize: 20, fontWeight: '700', color: '#004d00' }}>{communittie} communitie</Text>
-
-                                <View style={{ paddingHorizontal: 3, }}>
+                                {/**contact block */}
+                                <View style={{ alignItems: 'center' }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                        onPress={() => { setShowContacts(!showContacts) }}
+                                    >
+                                        {showContacts ? (
+                                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Show contacts</Text>
+                                        ) : (
+                                            <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Hide contacts</Text>
+                                        )}
+                                    </TouchableOpacity>
                                     
-
-                                    <Text style={{ fontSize: 16 }}>{discription}</Text>
-
-                                    <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}>We provide the following services: </Text>{services}</Text>
-                                
-                                </View>
-
-                               
-                                
-                            </View>
-
-                            <MapView
-                                style={{ height: 200, marginBottom: 5, borderRadius: 10 }}
-                                initialRegion={{
-                                    latitude: 65.187912,
-                                    longitude: -123.421722,
-                                    latitudeDelta: 0.99999,
-                                    longitudeDelta: 0.9421,
-                                }}
-                            />
-
-                            {/**contact block */}
-                            <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity
-                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                    onPress={() => { setShowContacts(!showContacts) }}
-                                >
-                                    {showContacts ? (
-                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Show contacts</Text>
-                                    ) : (
-                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Hide contacts</Text>
-                                    )}
-                                </TouchableOpacity>
-                                    
-                                {!showContacts &&
-                                    <View>
-                                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                    {!showContacts &&
+                                        <View>
+                                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
 
                                    
 
-                                            <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Our contacts: </Text>
-                                        </View>
+                                                <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Our contacts: </Text>
+                                            </View>
                             
 
-                                        <View style={{ paddingHorizontal: 3, }}>
-                                            <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Fontisto name='person' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{contactName}</Text>
+                                            <View style={{ paddingHorizontal: 3, }}>
+                                                <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Fontisto name='person' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{contactName}</Text>
 
-                                            <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Entypo name='location' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{adress}</Text>
+                                                <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Entypo name='location' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{adress}</Text>
 
-                                            <TouchableOpacity
-                                                onPress={() => { }}
-                                            >
-                                                <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Foundation name='telephone' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{phone}</Text>
-                                            </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    onPress={() => { }}
+                                                >
+                                                    <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Foundation name='telephone' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{phone}</Text>
+                                                </TouchableOpacity>
                                 
-                                            <TouchableOpacity>
-                                                <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><MaterialCommunityIcons name='web' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{website}</Text>
-                                            </TouchableOpacity>
+                                                <TouchableOpacity>
+                                                    <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><MaterialCommunityIcons name='web' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{website}</Text>
+                                                </TouchableOpacity>
                                 
-                                            <TouchableOpacity>
-                                                <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Entypo name='email' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{email}</Text>
-                                            </TouchableOpacity>
+                                                <TouchableOpacity>
+                                                    <Text style={{ fontSize: 16 }}><Text style={{ fontWeight: 'bold' }}><Entypo name='email' style={{ fontSize: 16, color: '#333333' }} /> : </Text>{email}</Text>
+                                                </TouchableOpacity>
                                 
+                                            </View>
                                         </View>
-                                    </View>
-                                }
+                                    }
+
+                                </View>
+
+                                {/**Fishing catch photo */}
+                                <View style={{ alignItems: 'center' }}>
+                                    <TouchableOpacity
+                                        style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
+                                        onPress={() => { setModalWithPhoto(true) }}
+                                    >
+                                        <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Fishing catch photo</Text>
+                                    </TouchableOpacity>
+                                </View>
 
                             </View>
 
-                            {/**Fishing catch photo */}
-                            <View style={{ alignItems: 'center' }}>
-                                <TouchableOpacity
-                                    style={{ alignItems: 'center', justifyContent: 'center', shadowOffset: { width: 3, height: 4 }, shadowOpacity: .8, elevation: 9, marginTop: 5, marginBottom: 15, paddingLeft: 10, fontSize: 20, borderWidth: 1, borderColor: '#fff', color: '#000', backgroundColor: 'rgba(255, 255, 255, 0.5)', borderRadius: 10, width: 250, height: 40, }}
-                                    onPress={() => { setModalWithPhoto(true) }}
-                                >
-                                    <Text style={{ color: '#fff', fontSize: 20, fontWeight: '600' }}>Fishing catch photo</Text>
-                                </TouchableOpacity>
-                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
 
-                        </View>
-
-                    </ScrollView>
+                    
 
                     <TouchableOpacity
-              onPress={() => setSideBarIsVisible(true)}
-              style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-              <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
-            </TouchableOpacity>
+                        onPress={() => setSideBarIsVisible(true)}
+                        style={{ position: 'absolute', top: 40, left: 15,  height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
+                    </TouchableOpacity>
 
                     {/**btn back */}
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 5, right: 5, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 15, height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
-                        <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
+                        <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
 
                     
@@ -256,15 +260,18 @@ const NewPlace = ({ navigation, route }) => {
                 >
                     <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
 
-                        {/**BTN SideBar Close */}
-                        <TouchableOpacity
-                            onPress={() => { setSideBarIsVisible(false) }}
-                            style={{ position: 'absolute', top: 20, left: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
-                        </TouchableOpacity>
+                        
 
                         {/**BTN route block */}
                         <View style={{ marginTop: 70, marginLeft: 20 }}>
+
+                            {/**BTN SideBar Close */}
+                            <TouchableOpacity
+                                onPress={() => { setSideBarIsVisible(false) }}
+                                style={{ marginBottom: 10 }}>
+                                <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
+                            </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => {
                                     navigation.navigate('HomeScreen'),
@@ -312,10 +319,10 @@ const NewPlace = ({ navigation, route }) => {
                         <TouchableOpacity
                             onPress={() => { setModalWithPhoto(false) }}
                             style={{ position: 'absolute', top: 0, left: 10, width: 40, height: 40 }}>
-                            <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
+                            <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
                         </TouchableOpacity>
 
-                        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
 
                             <TouchableOpacity
                                 onPress={() => {

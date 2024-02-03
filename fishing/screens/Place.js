@@ -104,7 +104,7 @@ const Place = ({ navigation, route }) => {
             >
                 <View style={{ flex: 1, position: 'relative' }}>
 
-                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 35, }}>
+                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 55, }}>
 
                         <ScrollView>
 
@@ -238,17 +238,17 @@ const Place = ({ navigation, route }) => {
 
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
+                        style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 5, right: 5, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ position: 'absolute', bottom: 15, right: 15,width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
-                        <Entypo name='reply' style={{ fontSize: 35, color: '#fff' }} />
+                        <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
                 </View>
 
@@ -260,15 +260,18 @@ const Place = ({ navigation, route }) => {
                 >
                     <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
 
-                        {/**BTN SideBar Close */}
-                        <TouchableOpacity
-                            onPress={() => { setSideBarIsVisible(false) }}
-                            style={{ position: 'absolute', top: 20, left: 10 }}>
-                            <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
-                        </TouchableOpacity>
+                        
 
                         {/**BTN route block */}
                         <View style={{ marginTop: 70, marginLeft: 20 }}>
+
+                            {/**BTN SideBar Close */}
+                        <TouchableOpacity
+                            onPress={() => { setSideBarIsVisible(false) }}
+                            style={{ marginBottom: 10 }}>
+                            <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
+                        </TouchableOpacity>
+
                             <TouchableOpacity
                                 onPress={() => {
                                     navigation.navigate('HomeScreen'),
@@ -316,10 +319,10 @@ const Place = ({ navigation, route }) => {
                         <TouchableOpacity
                             onPress={() => { setModalWithPhoto(false) }}
                             style={{ position: 'absolute', top: 0, left: 10, width: 40, height: 40 }}>
-                            <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
+                            <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
                         </TouchableOpacity>
 
-                        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
 
                             <TouchableOpacity
                                 onPress={() => {

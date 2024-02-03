@@ -8,7 +8,7 @@ import {
   Modal,
   Image,
   ScrollView,
-  Animated
+  Animated,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
@@ -69,7 +69,6 @@ const HomeScreen = ({ navigation }) => {
     
     );
   };
-  /////////////////////////////////////
 
   return (
     <View style={{ flex: 1, }}>
@@ -90,7 +89,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <View style={{ flex: 1, position: 'relative' }}>
 
-            <SafeAreaView style={{ marginHorizontal: 10, marginTop: 35, backgroundColor: 'rgba(128, 128, 128, 0.5)', }}>
+            <SafeAreaView style={{ marginHorizontal: 10, marginTop: 55, backgroundColor: 'rgba(128, 128, 128, 0.5)', }}>
               <ScrollView>
                 <Image
                   source={require('../assets/111.webp')}
@@ -170,8 +169,8 @@ const HomeScreen = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={() => setSideBarIsVisible(true)}
-              style={{ position: 'absolute', top: 20, left: 5, width: 38, height: 38, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-              <AntDesign name='bars' style={{ color: '#fff', fontSize: 35 }} />
+              style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+              <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
             </TouchableOpacity>
 
           
@@ -184,15 +183,16 @@ const HomeScreen = ({ navigation }) => {
             >
               <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
 
-                {/**BTN SideBar Close */}
-                <TouchableOpacity
-                  onPress={() => { setSideBarIsVisible(false) }}
-                  style={{ position: 'absolute', top: 20, left: 10 }}>
-                  <Text style={{ color: '#fff', fontSize: 30 }}>X</Text>
-                </TouchableOpacity>
-
-                {/**BTN route block */}
-                <View style={{ marginTop: 70, marginLeft: 20 }}>
+                {/**BTN route & close block */}
+                  <View style={{ marginTop: 70, marginLeft: 20 }}>
+                    
+                  {/**BTN SideBar Close */}
+                  <TouchableOpacity
+                    onPress={() => { setSideBarIsVisible(false) }}
+                    style={{ marginBottom: 10 }}>
+                    <Text style={{ color: '#fff', fontSize: 40 }}>X</Text>
+                  </TouchableOpacity>
+                    
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('HomeScreen'),

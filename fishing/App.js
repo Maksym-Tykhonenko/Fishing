@@ -20,6 +20,7 @@ import NewPlace from './screens/NewPlace';
 const App = () => {
 
   LogBox.ignoreLogs(['RCTBridge required dispatch_sync']);
+  
 
   return (
     <NavigationContainer>
