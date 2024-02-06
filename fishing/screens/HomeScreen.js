@@ -169,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
 
             <TouchableOpacity
               onPress={() => setSideBarIsVisible(true)}
-              style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+              style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5, borderWidth:1, borderColor: '#fff' }}>
               <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
             </TouchableOpacity>
 

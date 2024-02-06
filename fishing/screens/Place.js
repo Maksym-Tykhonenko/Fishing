@@ -238,7 +238,7 @@ const Place = ({ navigation, route }) => {
 
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        style={{borderWidth: 1, borderColor: '#fff', position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
                         <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
@@ -246,7 +246,7 @@ const Place = ({ navigation, route }) => {
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ position: 'absolute', bottom: 15, right: 15,width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{borderWidth: 1, borderColor: '#fff', position: 'absolute', bottom: 15, right: 15,width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
                     >
                         <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
