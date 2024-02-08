@@ -19,9 +19,12 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import { uid } from 'uid';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+//import { Fish } from '..';
+//import Fish from '../assets/redisigne/Fish.svg';
 
 
 import { communitties } from '../data/commubities';
+//import { Fish } from '../assets/redisigne/Fish.svg';
 
 
 const FishingPlaceScreen = ({ navigation }) => {
@@ -139,22 +142,48 @@ const FishingPlaceScreen = ({ navigation }) => {
         <View style={{ flex: 1, }}>
             <ImageBackground
                 style={{ flex: 1 }}
-                source={require('../assets/bgr.jpg')}
+                source={require('../assets/redisigne/bgr.jpg')}
             >
+                {/** */}
                 <View style={{ flex: 1, position: 'relative' }}>
 
-                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 55, }}>
+                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 30, }}>
                         <ScrollView>
+
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
+
+                                {/** BTN Sidbar position: 'absolute', top: 40, left: 15,*/}
+                                <TouchableOpacity
+                                    onPress={() => setSideBarIsVisible(true)}
+                                    style={{ borderWidth: 1, borderColor: '#fff',  width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 20 }}>
+                                    <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
+                                </TouchableOpacity>
+
+                                {/** 
+                                <Fish width={100 } height={100 } />*/}
+                                <Image
+                                    style={{width: 100, height: 70}}
+                                    source={require('../assets/redisigne/hhh.png')} />
+
+                                {/** BTN Add place  position: 'absolute', top: 40, right: 15,*/}
+                                <TouchableOpacity
+                                    onPress={() => { setModalAddPlaceIsVisible(true) }}
+                                    style={{ borderWidth: 1, borderColor: '#fff',  width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 20, paddingLeft: 2 }}>
+                                    <Entypo name='plus' style={{ color: '#fff', fontSize: 50 }} />
+                                </TouchableOpacity>
+
+                            </View>
+
                             
                             {newLocations && newLocations.map((i) => {
                                 return (
                                     <TouchableOpacity
                                         onPress={() => { navigation.navigate('NewPlace', { place: i }) }}
-                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}
+                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}
                                         key={i.id}>
                                         <Image
                                             source={{ uri: i.photo }}
-                                            style={{ width: '100%', height: 200 }}
+                                            style={{ width: '100%', height: 200, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}
                                         />
                                         <Text style={{ fontWeight: '600', fontSize: 17 }}>{i.place}</Text>
                                     </TouchableOpacity>
@@ -165,12 +194,12 @@ const FishingPlaceScreen = ({ navigation }) => {
                             {communitties.map((i) => {
                                 return (
                                     <TouchableOpacity
-                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center' }}
+                                        style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)', marginBottom: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}
                                         key={uid()}
                                         onPress={() => { navigation.navigate('Place', { place: i }) }}>
                                         <Image
                                             source={i.photo}
-                                            style={{ width: '100%', height: 200 }}
+                                            style={{ width: '100%', height: 200, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}
                                         />
                                         <Text style={{ fontWeight: '600', fontSize: 17 }}>{i.place}</Text>
                                     </TouchableOpacity>
@@ -182,23 +211,15 @@ const FishingPlaceScreen = ({ navigation }) => {
 
                     </SafeAreaView>
 
-                    <TouchableOpacity
-                        onPress={() => setSideBarIsVisible(true)}
-                        style={{ borderWidth: 1, borderColor: '#fff',position: 'absolute', top: 40, left: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
-                        <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
-                    </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress={() => { setModalAddPlaceIsVisible(true) }}
-                        style={{ borderWidth: 1, borderColor: '#fff',position: 'absolute', top: 40, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5, paddingLeft:2 }}>
-                        <Entypo name='plus' style={{ color: '#fff', fontSize: 50 }} />
-                    </TouchableOpacity>
+                    
 
+                    {/** BTN goBack*/}
                     <TouchableOpacity
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{ borderWidth: 1, borderColor: '#fff',position: 'absolute', bottom: 15, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{ borderWidth: 1, borderColor: '#fff', position: 'absolute', bottom: 15, right: 15, width: 60, height: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 20 }}
                     >
                         <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
@@ -211,7 +232,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                         visible={modalAddPlaceIsVisible}
                     >
 
-                        <View style={{ backgroundColor: '#292c33', flex: 1, marginTop: '20%', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+                        <View style={{ backgroundColor: '#0f8ab4', flex: 1, marginTop: '20%', borderTopLeftRadius: 10, borderTopRightRadius: 10, borderColor: '#fff', borderWidth: 1, }}>
 
                             {/**BTN Modal Close */}
                             <TouchableOpacity
@@ -352,7 +373,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                                             </TouchableOpacity>
                                         </View>
 
-                                        <View style={{height: 400}}>
+                                        <View style={{ height: 400 }}>
 
                                         </View>
 
@@ -375,7 +396,7 @@ const FishingPlaceScreen = ({ navigation }) => {
                         transparent={true}
                         visible={sideBarIsVisible}
                     >
-                        <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
+                        <View style={{ backgroundColor: '#0f8ab4', flex: 1, marginRight: '30%', borderRightColor: '#fff', borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius: 10 }}>
 
                             {/**BTN route block */}
                             <View style={{ marginTop: 70, marginLeft: 20 }}>

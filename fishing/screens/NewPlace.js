@@ -102,14 +102,21 @@ const NewPlace = ({ navigation, route }) => {
         <View style={{ flex: 1, }}>
             <ImageBackground
                 style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-                source={require('../assets/bgr.jpg')}
+                source={require('../assets/redisigne/bgr.jpg')}
             >
 
                 <View style={{ flex: 1, position: 'relative' }}>
-                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 55, }}>
+                    <SafeAreaView style={{ flex: 1, marginHorizontal: 10, marginTop: 10, }}>
+
+                        <View style={{ alignItems: 'center'}}>
+                            <Image
+                                style={{width: 100, height: 70}}
+                                source={require('../assets/redisigne/hhh.png')} />
+                        </View>
+                        
                         <ScrollView>
                         
-                            <View style={{ flex: 1, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
+                            <View style={{ flex: 1, backgroundColor: 'rgba(128, 128, 128, 0.1)', borderTopStartRadius: 10, borderTopEndRadius: 10 }}>
                                 <View style={{ flex: 1, alignItems: 'center' }}>
 
                                     <View style={{ alignItems: 'center', paddingHorizontal: 3, justifyContent: 'center' }}>
@@ -122,7 +129,7 @@ const NewPlace = ({ navigation, route }) => {
 
                                     <Image
                                         source={{ uri: photo }}
-                                        style={{ width: width, height: 200 }}
+                                        style={{ width: width, height: 200, borderRadius: 10 }}
                                     />
 
                                     {/**Raitinng block */}
@@ -230,10 +237,10 @@ const NewPlace = ({ navigation, route }) => {
                     </SafeAreaView>
 
                     
-
+                    {/**btn SIDEBAR */}
                     <TouchableOpacity
                         onPress={() => setSideBarIsVisible(true)}
-                        style={{ borderWidth: 1, borderColor: '#fff',position: 'absolute', top: 40, left: 15,  height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}>
+                        style={{ borderWidth: 1, borderColor: '#fff',position: 'absolute', top: 40, left: 15,  height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 20 }}>
                         <AntDesign name='bars' style={{ color: '#fff', fontSize: 50 }} />
                     </TouchableOpacity>
 
@@ -242,7 +249,7 @@ const NewPlace = ({ navigation, route }) => {
                         onPress={() => {
                             navigation.goBack()
                         }}
-                        style={{borderWidth: 1, borderColor: '#fff',position: 'absolute', bottom: 15, right: 15, height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 5 }}
+                        style={{borderWidth: 1, borderColor: '#fff',position: 'absolute', bottom: 15, right: 15, height: 60, width: 60, backgroundColor: 'rgba(128, 128, 128, 0.5)', borderRadius: 20 }}
                     >
                         <Entypo name='reply' style={{ fontSize: 50, color: '#fff' }} />
                     </TouchableOpacity>
@@ -258,7 +265,7 @@ const NewPlace = ({ navigation, route }) => {
                     transparent={true}
                     visible={sideBarIsVisible}
                 >
-                    <View style={{ backgroundColor: '#292c33', flex: 1, marginRight: '30%' }}>
+                    <View style={{  backgroundColor: '#0f8ab4', flex: 1, marginRight: '30%', borderRightColor: '#fff', borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius:10  }}>
 
                         
 
@@ -313,7 +320,7 @@ const NewPlace = ({ navigation, route }) => {
                     visible={modalWithPhoto}
                 >
 
-                    <View style={{ backgroundColor: '#292c33', flex: 1, marginTop: '20%', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+                    <View style={{ backgroundColor: '#0f8ab4', flex: 1, marginTop: '20%', borderTopLeftRadius: 10, borderTopRightRadius: 10, borderColor: '#fff', borderWidth: 1 }}>
 
                         {/**BTN SideBar Close */}
                         <TouchableOpacity
@@ -341,7 +348,7 @@ const NewPlace = ({ navigation, route }) => {
                                             <Image
                                                 key={uid()}
                                                 source={{ uri: i }}
-                                                style={{ width: '45%', height: 150, marginLeft: '3%', marginRight: '1%', marginTop: 10 }}
+                                                style={{ width: '45%', height: 150, marginLeft: '3%', marginRight: '1%', marginTop: 10, borderRadius: 20 }}
                                             />
                                         )
                                     })}
