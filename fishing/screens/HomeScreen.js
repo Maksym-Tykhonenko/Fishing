@@ -89,11 +89,14 @@ const HomeScreen = ({ navigation }) => {
           <View style={{ flex: 1, position: 'relative' }}>
 
             <SafeAreaView style={{ marginHorizontal: 10, marginTop: 10,  }}>
+
+              {/** LOGO */}
               <View style={{ alignItems: 'center' }}>
                 <Image
                   style={{ width: 100, height: 70 }}
                   source={require('../assets/redisigne/hhh.png')} />
               </View>
+              
               <ScrollView>
                 <View style={{ backgroundColor: 'rgba(128, 128, 128, 0.5)',borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
 
